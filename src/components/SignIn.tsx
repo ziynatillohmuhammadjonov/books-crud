@@ -8,35 +8,36 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Colors, FontSizes } from "../shared/tokens";
-import LinkButton from "../shared/Button/LinkButton";
-import GoogleIcon from "../assets/icon/GoogleIcon";
-import FacebokIcon from "../assets/icon/FacebookIcon";
-import HorizontalLine from "../shared/HorizontalLine/HorizontalLine";
+import { useEffect } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import FacebokIcon from "../assets/icon/FacebookIcon";
+import GoogleIcon from "../assets/icon/GoogleIcon";
+import { setUser } from "../helper/userToken";
 import useSignIn from "../hooks/requests/signin";
 import { iUser } from "../hooks/requests/signup";
-import { useEffect } from "react";
-import { setUser } from "../helper/userToken";
+import LinkButton from "../shared/Button/LinkButton";
+import HorizontalLine from "../shared/HorizontalLine/HorizontalLine";
+import { Colors, FontSizes } from "../shared/tokens";
 
 function SignIn() {
   const navigate = useNavigate();
-  const { register, handleSubmit, reset } = useForm();
-  const { mutate, isSuccess, isError, data } = useSignIn();
-  const onSubmit = (data: iUser) => {
-    mutate(data);
-    console.log(data);
+  const { register, handleSubmit } = useForm<iUser>();
+  const { mutate, isSuccess, data } = useSignIn();
+
+  const onSubmit: SubmitHandler<iUser> = (formData) => {
+    mutate(formData);
+    console.log(formData);
   };
 
   useEffect(() => {
-    if (isSuccess && data.data) {
-      const resData: iUser & { id: number } = data.data.data;
-      const { id, email, name, ...res } = resData;
-      setUser(res);
+    if (isSuccess && data?.data) {
+      const resData: iUser = data.data.data;
+      const newData = { key: resData.key, secret: resData.secret };
+      setUser(newData);
       navigate("/");
     }
-  }, [data]);
+  }, [isSuccess, data, navigate]);
 
   return (
     <Card
@@ -47,35 +48,34 @@ function SignIn() {
         boxShadow: "0px 4px 32px #3333330A ",
       }}
     >
-      <Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Typography
             variant="h2"
             fontSize={36}
-            lineHeight={"45.18px"}
+            lineHeight="45.18px"
             color={Colors.gray}
             fontWeight={700}
             gutterBottom
-            marginBottom={"36px"}
+            marginBottom="36px"
           >
             Sign in
           </Typography>
-          <Box marginBottom={"28.5px"}>
+          <Box marginBottom="28.5px">
             <LinkButton
               icon={<GoogleIcon />}
-              text={"Continue with Google"}
+              text="Continue with Google"
               style={{ marginBottom: "16px" }}
-              url="www.google.com"
+              url="https://www.google.com"
             />
             <LinkButton
               icon={<FacebokIcon />}
-              text={"Continue with Facebook"}
-              url="www.facebook.com"
+              text="Continue with Facebook"
+              url="https://www.facebook.com"
               style={{ marginBottom: "28.5px" }}
             />
             <HorizontalLine text="OR" />
           </Box>
-          {/* Input Group start */}
           <Box
             sx={{
               display: "flex",
@@ -86,9 +86,9 @@ function SignIn() {
           >
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -104,15 +104,14 @@ function SignIn() {
                   fontFamily: "Mulish",
                   color: Colors.gray,
                 }}
-                placeholder="Enter your password"
-                type="password"
+                placeholder="Enter your key"
               />
             </InputLabel>
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -133,7 +132,6 @@ function SignIn() {
               />
             </InputLabel>
           </Box>
-          {/* Input Group end */}
         </CardContent>
         <CardActions>
           <Button
@@ -153,7 +151,7 @@ function SignIn() {
           >
             <Typography
               color={Colors.white}
-              fontWeight={"500"}
+              fontWeight="500"
               fontSize={FontSizes.buttonSize}
               lineHeight={FontSizes.buttomSizeHeight}
             >
@@ -163,16 +161,16 @@ function SignIn() {
         </CardActions>
       </Box>
       <Link
-        to={"/signup"}
+        to="/signup"
         style={{
           display: "flex",
           justifyContent: "center",
           marginBottom: "48px",
         }}
       >
-        <Typography color={"#000000"}>Already signed up? </Typography>
+        <Typography color="#000000">Already signed up? </Typography>
         &nbsp;
-        <Typography> Go to sign up.</Typography>
+        <Typography>Go to sign up.</Typography>
       </Link>
     </Card>
   );

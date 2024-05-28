@@ -8,30 +8,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Colors, FontSizes } from "../shared/tokens";
-import LinkButton from "../shared/Button/LinkButton";
-import GoogleIcon from "../assets/icon/GoogleIcon";
-import FacebokIcon from "../assets/icon/FacebookIcon";
-import HorizontalLine from "../shared/HorizontalLine/HorizontalLine";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import useSignUp, { iUser } from "../hooks/requests/signup";
 import { useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import FacebokIcon from "../assets/icon/FacebookIcon";
+import GoogleIcon from "../assets/icon/GoogleIcon";
+import useSignUp, { iUser } from "../hooks/requests/signup";
+import LinkButton from "../shared/Button/LinkButton";
+import HorizontalLine from "../shared/HorizontalLine/HorizontalLine";
+import { Colors, FontSizes } from "../shared/tokens";
 
 function SignUp() {
   const navigate = useNavigate();
-  const { handleSubmit, register, reset } = useForm();
-  const { mutate, isError, isSuccess, data } = useSignUp();
+  const { handleSubmit, register } = useForm<iUser>();
+  const { mutate, isSuccess } = useSignUp();
 
-  const onSubmit = (data: iUser) => {
-    mutate(data);
-    console.log(data);
+  const onSubmit: SubmitHandler<iUser> = (formData) => {
+    mutate(formData);
+    console.log(formData);
   };
+
   useEffect(() => {
     if (isSuccess) {
       navigate("/");
     }
-  }, [isSuccess]);
+  }, [isSuccess, navigate]);
+
   return (
     <Card
       sx={{
@@ -41,30 +43,30 @@ function SignUp() {
         boxShadow: "0px 4px 32px #3333330A ",
       }}
     >
-      <Box component={"form"} onSubmit={handleSubmit(onSubmit)}>
+      <Box component="form" onSubmit={handleSubmit(onSubmit)}>
         <CardContent>
           <Typography
             variant="h2"
             fontSize={36}
-            lineHeight={"45.18px"}
+            lineHeight="45.18px"
             color={Colors.gray}
             fontWeight={700}
             gutterBottom
-            marginBottom={"36px"}
+            marginBottom="36px"
           >
             Sign up
           </Typography>
-          <Box marginBottom={"28.5px"}>
+          <Box marginBottom="28.5px">
             <LinkButton
               icon={<GoogleIcon />}
-              text={"Continue with Google"}
+              text="Continue with Google"
               style={{ marginBottom: "16px" }}
-              url="www.google.com"
+              url="https://www.google.com"
             />
             <LinkButton
               icon={<FacebokIcon />}
-              text={"Continue with Facebook"}
-              url="www.facebook.com"
+              text="Continue with Facebook"
+              url="https://www.facebook.com"
               style={{ marginBottom: "28.5px" }}
             />
             <HorizontalLine text="OR" />
@@ -80,9 +82,9 @@ function SignUp() {
           >
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -99,14 +101,14 @@ function SignUp() {
                   color: Colors.gray,
                   padding: "0px",
                 }}
-                placeholder="Enter your email"
+                placeholder="Enter your name"
               />
             </InputLabel>
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -122,14 +124,14 @@ function SignUp() {
                   fontFamily: "Mulish",
                   color: Colors.gray,
                 }}
-                placeholder="Enter your username"
+                placeholder="Enter your email"
               />
             </InputLabel>
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -145,15 +147,15 @@ function SignUp() {
                   fontFamily: "Mulish",
                   color: Colors.gray,
                 }}
-                placeholder="Enter your password"
+                placeholder="Enter your key"
                 type="password"
               />
             </InputLabel>
             <InputLabel>
               <Typography
-                textAlign={"left"}
+                textAlign="left"
                 color={Colors.gray}
-                fontWeight={"500"}
+                fontWeight="500"
                 fontSize={FontSizes.inputTitleSize}
                 lineHeight={FontSizes.inputTitleSizeHeight}
               >
@@ -169,7 +171,7 @@ function SignUp() {
                   fontFamily: "Mulish",
                   color: Colors.gray,
                 }}
-                placeholder="Enter your password"
+                placeholder="Enter your secret"
                 type="password"
               />
             </InputLabel>
@@ -194,7 +196,7 @@ function SignUp() {
           >
             <Typography
               color={Colors.white}
-              fontWeight={"500"}
+              fontWeight="500"
               fontSize={FontSizes.buttonSize}
               lineHeight={FontSizes.buttomSizeHeight}
             >
@@ -204,16 +206,16 @@ function SignUp() {
         </CardActions>
       </Box>
       <Link
-        to={"/signin"}
+        to="/signin"
         style={{
           display: "flex",
           justifyContent: "center",
           marginBottom: "48px",
         }}
       >
-        <Typography color={"#000000"}>Already signed in? </Typography>
+        <Typography color="#000000">Already signed in? </Typography>
         &nbsp;
-        <Typography> Go to sign in.</Typography>
+        <Typography>Go to sign in.</Typography>
       </Link>
     </Card>
   );
