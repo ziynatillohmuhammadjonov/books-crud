@@ -17,7 +17,7 @@ const useSignIn = () => {
         },
       });
     },
-    onSuccess: (res) => {
+    onSuccess: () => {
       toast.success("Welcome user");
     },
     onError: (err) => {
