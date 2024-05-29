@@ -34,18 +34,19 @@ interface iProps {
 }
 
 function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
-  const { reset, register, handleSubmit } = useForm();
+  const { reset, register, handleSubmit } = useForm<iBookIsbn>();
   const { mutate, isSuccess } = useAddNewBookWithIsbn();
   const onSubmit: SubmitHandler<iBookIsbn> = (formData) => {
     mutate(formData);
-    console.log(formData);
   };
+
   useEffect(() => {
     if (isSuccess) {
       reset();
       setOpenModal(false);
     }
-  }, [isSuccess]);
+  }, [isSuccess, reset, setOpenModal]);
+
   return (
     <Modal
       open={openModal}
@@ -70,7 +71,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
           >
             Create a book
           </Typography>
-          <IconButton aria-label="delete" onClick={() => setOpenModal(false)}>
+          <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -91,12 +92,11 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
               lineHeight={FontSizes.inputTitleSizeHeight}
               fontFamily="Mulish"
             >
-              Isbn
+              ISBN
             </Typography>
             <TextField
-              {...register("isbn")}
+              {...register("isbn", { required: true, valueAsNumber: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -107,7 +107,8 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
                   paddingX: "18px",
                 },
               }}
-              placeholder="Enter your isbn code"
+              placeholder="Enter your ISBN code"
+              type="number"
             />
           </InputLabel>
         </Box>

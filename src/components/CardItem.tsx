@@ -15,13 +15,10 @@ import { Colors, FontSizes } from "../shared/tokens";
 import BookPatchModal from "./BookPatchModal";
 
 interface iProps {
-  data: {
-    book: iBook;
-  };
+  data: iBook;
 }
 
 function CardItem({ data }: iProps) {
-  // console.log(data);
   const [hover, setHover] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const deleteBooks = useDeleteBook();
@@ -64,6 +61,7 @@ function CardItem({ data }: iProps) {
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography>
+          {" "}
           {data.book?.author}: {data.book?.published}-year
         </Typography>
         <Typography
@@ -123,7 +121,7 @@ function CardItem({ data }: iProps) {
       </Stack>
       <BookPatchModal
         openModal={openModal}
-        id={data.book.id}
+        id={0}
         setOpenModal={setOpenModal}
       />
       <Typography>

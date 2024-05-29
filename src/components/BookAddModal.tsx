@@ -34,11 +34,11 @@ interface iProps {
 }
 
 function BookAddModal({ openModal, setOpenModal }: iProps) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<iBook>();
   const { mutate } = useAddNewBook();
   const onSubmit: SubmitHandler<iBook> = (formData) => {
     mutate(formData);
-    console.log(formData);
+    setOpenModal(false); // Close modal on submit
   };
 
   return (
@@ -65,7 +65,7 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
           >
             Create a book
           </Typography>
-          <IconButton aria-label="delete" onClick={() => setOpenModal(false)}>
+          <IconButton aria-label="close" onClick={() => setOpenModal(false)}>
             <CloseIcon />
           </IconButton>
         </Box>
@@ -89,9 +89,8 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
               Title
             </Typography>
             <TextField
-              {...register("title")}
+              {...register("title", { required: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -117,9 +116,8 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
               Author
             </Typography>
             <TextField
-              {...register("author")}
+              {...register("author", { required: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -145,9 +143,8 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
               Cover
             </Typography>
             <TextField
-              {...register("cover")}
+              {...register("cover", { required: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -180,9 +177,8 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
               Published
             </Typography>
             <TextField
-              {...register("published")}
+              {...register("published", { required: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -200,7 +196,7 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
                   </InputAdornment>
                 ),
               }}
-              placeholder="Enter your published"
+              placeholder="Enter your published year"
             />
           </InputLabel>
           <InputLabel>
@@ -215,9 +211,8 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
               Pages
             </Typography>
             <TextField
-              {...register("pages")}
+              {...register("pages", { required: true, valueAsNumber: true })}
               id="outlined-basic"
-              label=""
               variant="outlined"
               sx={{
                 width: "100%",
@@ -228,7 +223,7 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
                   paddingX: "18px",
                 },
               }}
-              placeholder="Enter your pages"
+              placeholder="Enter number of pages"
             />
           </InputLabel>
         </Box>
