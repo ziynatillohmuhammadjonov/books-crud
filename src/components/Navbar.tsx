@@ -5,19 +5,51 @@ import {
   Input,
   InputAdornment,
   Stack,
-  TextField,
-  styled,
 } from "@mui/material";
 import LogoIcon from "../assets/icon/LogoIcon";
 import { Link } from "react-router-dom";
 import SearchIcon from "../assets/icon/SearchIcon";
 import CloseIcon from "../assets/icon/CloseIcon";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Colors } from "../shared/tokens";
 import NotfIcon from "../assets/icon/NotfIcon";
+import useSearchBook from "../hooks/requests/searchBook";
+import debounce from "lodash.debounce";
+import searchBook from "../store/searchBookStre";
 
 function Navbar() {
-  const [title, setTitle] = useState<string | null>(null);
+  const setBooks = searchBook((state) => state.updateBook);
+  const loadingBooks = searchBook((state) => state.updateLoading);
+  const [title, setTitle] = useState<string>("");
+  const { mutate, data, isPending } = useSearchBook();
+
+  useEffect(() => {
+    if (data?.data.data) {
+      setBooks(data?.data.data);
+    }
+  }, [data]);
+  useEffect(() => {
+    if (!title) {
+      setBooks([]);
+    }
+  }, [title]);
+  useEffect(() => {
+    loadingBooks(isPending);
+  }, [isPending]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSearch = useCallback(
+    debounce((searchTerm: string) => {
+      if (searchTerm) {
+        mutate(searchTerm);
+      }
+    }, 500),
+    []
+  );
+
+  useEffect(() => {
+    debouncedSearch(title);
+    return debouncedSearch.cancel;
+  }, [title, debouncedSearch]);
   return (
     <Box
       sx={{

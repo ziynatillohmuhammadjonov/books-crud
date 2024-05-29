@@ -34,8 +34,8 @@ interface iProps {
 }
 
 function BookAddModal({ openModal, setOpenModal }: iProps) {
-  const { reset, register, handleSubmit } = useForm();
-  const { mutate, isSuccess, isError, data } = useAddNewBook();
+  const { register, handleSubmit } = useForm();
+  const { mutate } = useAddNewBook();
   const onSubmit: SubmitHandler<iBook> = (formData) => {
     mutate(formData);
     console.log(formData);

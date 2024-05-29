@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import { Colors, FontSizes } from "../../shared/tokens";
 import Cards from "../../components/Cards";
-import BookAddModal from "../../components/BookAddModal";
+import BookAddModalIsbn from "../../components/BookAddModalIsbn";
+import useGetAllBooks from "../../hooks/requests/getAllBooks";
+import { iBook } from "../../hooks/requests/addNewBook";
 
 function Home() {
+  const { data } = useGetAllBooks();
+  const newData: iBook[] = data?.data.data;
   const [openModal, setOpenModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const token = getUser();
@@ -35,7 +39,10 @@ function Home() {
             textAlign="left"
             color={Colors.white}
           >
-            You’ve got <span style={{ color: Colors.primary }}>7 book</span>
+            You’ve got{" "}
+            <span style={{ color: Colors.primary }}>
+              {newData && newData.length} book
+            </span>
           </Typography>
           <Typography
             fontFamily="Mulish"
@@ -81,7 +88,8 @@ function Home() {
         </Stack>
       </Box>
       <Cards />
-      <BookAddModal openModal={openModal} setOpenModal={setOpenModal} />
+      {/* <BookAddModal openModal={openModal} setOpenModal={setOpenModal} /> */}
+      <BookAddModalIsbn openModal={openModal} setOpenModal={setOpenModal} />
     </Box>
   );
 }

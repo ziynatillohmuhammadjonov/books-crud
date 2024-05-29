@@ -3,13 +3,10 @@ import { Colors, FontSizes } from "../shared/tokens";
 import { iBook } from "../hooks/requests/addNewBook";
 
 interface iProps {
-  book: {
-    book?: iBook;
-  };
+  data: iBook & { isbn: number };
 }
 
-function CardItem({ book: { book } }: iProps) {
-  console.log(book);
+function CardItemSearch({ data }: iProps) {
   return (
     <Card
       sx={{
@@ -18,7 +15,6 @@ function CardItem({ book: { book } }: iProps) {
         boxShadow: "0 4px 24px #33333314",
         padding: "32px",
         borderColor: Colors.bgCard,
-        position: "relative",
       }}
     >
       <CardContent sx={{ padding: 0, marginBottom: "8px" }}>
@@ -31,8 +27,12 @@ function CardItem({ book: { book } }: iProps) {
           fontWeight={"600"}
           marginBottom={"6px"}
         >
-          {book?.title}
+          {data.author}
         </Typography>
+        <img
+          src={data.cover}
+          style={{ width: "200px", marginTop: "20px", marginBottom: "20px" }}
+        />
         <Typography
           fontSize={FontSizes.contentSize}
           lineHeight={FontSizes.contentSizeHeight}
@@ -40,31 +40,16 @@ function CardItem({ book: { book } }: iProps) {
           fontFamily="Mulish"
           textAlign={"left"}
         >
-          Lorem ipsum dolor sit amet consectetur. Nulla adipiscing neque varius
-          vestibulum magna in. Tortor quisque nisl congue ut tellus sem id.
+          ISBN code: &nbsp; {data.isbn}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography>
-          {book?.author}: {book?.published}-year
-        </Typography>
-        <Typography
-          fontSize={FontSizes.contentSmallSizes}
-          lineHeight={FontSizes.contentSmallSizesHeight}
-          sx={{
-            backgroundColor: Colors.primaryLight,
-            color: Colors.primary,
-            textTransform: "none",
-            borderRadius: "15px",
-            paddingX: "12px",
-            paddingY: "2px",
-          }}
-        >
-          {book?.pages} pages
+          {data.author}: {data.published}-year
         </Typography>
       </CardActions>
     </Card>
   );
 }
 
-export default CardItem;
+export default CardItemSearch;
