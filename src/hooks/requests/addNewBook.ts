@@ -30,10 +30,10 @@ const useAddNewBook = () => {
       const Sign = mdHash(
         "POST",
         Books.creatBook,
-        data,
+        data.book,
         userToken ? userToken.secret : ""
       );
-      return axios.post(api, data, {
+      return axios.post(api, data.book, {
         headers: {
           Key: userToken?.key,
           Sign: Sign,

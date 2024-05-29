@@ -27,7 +27,7 @@ function Cards() {
         ? searchBooks.map((item, idx) => (
             <CardItemSearch data={item} key={idx} />
           ))
-        : newData.map((item, idx) => <CardItem data={item} key={idx} />)}
+        : newData?.map((item, idx) => <CardItem data={item} key={idx} />)}
     </Box>
   );
 }

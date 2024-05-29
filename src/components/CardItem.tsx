@@ -19,6 +19,7 @@ interface iProps {
 }
 
 function CardItem({ data }: iProps) {
+  console.log(data);
   const [hover, setHover] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const deleteBooks = useDeleteBook();
@@ -121,7 +122,7 @@ function CardItem({ data }: iProps) {
       </Stack>
       <BookPatchModal
         openModal={openModal}
-        id={0}
+        id={data.book.id}
         setOpenModal={setOpenModal}
       />
       <Typography>
