@@ -11,6 +11,9 @@ export interface iBook {
   cover: string;
   published: string;
   pages: number;
+  id: number;
+  isbn: number;
+  status: number;
 }
 
 const useAddNewBook = () => {

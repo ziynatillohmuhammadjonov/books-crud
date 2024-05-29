@@ -3,7 +3,7 @@ import { Colors, FontSizes } from "../shared/tokens";
 import { iBook } from "../hooks/requests/addNewBook";
 
 interface iProps {
-  data: iBook & { isbn: number };
+  data: iBook;
 }
 
 function CardItemSearch({ data }: iProps) {

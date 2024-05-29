@@ -1,20 +1,19 @@
 import {
   Box,
   Button,
+  FormControl,
+  FormControlLabel,
   IconButton,
-  InputLabel,
   Modal,
+  Radio,
+  RadioGroup,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
 import CloseIcon from "../assets/icon/CloseIcon";
-import useAddNewBookWithIsbn, {
-  iBookIsbn,
-} from "../hooks/requests/addNewBookWithIsbn";
 import { Colors, FontSizes } from "../shared/tokens";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import usePatchBook from "../hooks/requests/patchBook";
 
 const style = {
   position: "absolute",
@@ -30,19 +29,15 @@ const style = {
 
 interface iProps {
   openModal: boolean;
+  id: number;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
-  const { reset, register, handleSubmit } = useForm();
-  const { mutate, isSuccess } = useAddNewBookWithIsbn();
-  const onSubmit: SubmitHandler<iBookIsbn> = (formData) => {
-    mutate(formData);
-    console.log(formData);
-  };
+function BookPatchModal({ openModal, id, setOpenModal }: iProps) {
+  const [status, setStatus] = useState<number>(0);
+  const { mutate, isSuccess } = usePatchBook();
   useEffect(() => {
     if (isSuccess) {
-      reset();
       setOpenModal(false);
     }
   }, [isSuccess]);
@@ -52,7 +47,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box sx={style} component={"form"} onSubmit={handleSubmit(onSubmit)}>
+      <Box sx={style} component={"form"}>
         <Box
           sx={{
             display: "flex",
@@ -68,7 +63,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
             lineHeight={FontSizes.headingSmalHeight}
             fontWeight={"600"}
           >
-            Create a book
+            Edit book status
           </Typography>
           <IconButton aria-label="delete" onClick={() => setOpenModal(false)}>
             <CloseIcon />
@@ -77,39 +72,63 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
+            justifyContent: "center",
             gap: "16px",
             marginBottom: "28px",
           }}
         >
-          <InputLabel>
-            <Typography
-              textAlign="left"
-              color={Colors.gray}
-              fontWeight="500"
-              fontSize={FontSizes.inputTitleSize}
-              lineHeight={FontSizes.inputTitleSizeHeight}
-              fontFamily="Mulish"
+          <FormControl>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              onChange={(e) => setStatus(Number(e.target.value))}
             >
-              Isbn
-            </Typography>
-            <TextField
-              {...register("isbn")}
-              id="outlined-basic"
-              label=""
-              variant="outlined"
-              sx={{
-                width: "100%",
-                fontFamily: "Mulish",
-                color: Colors.gray,
-                "& .MuiOutlinedInput-input": {
-                  paddingY: "16.8px",
-                  paddingX: "18px",
-                },
-              }}
-              placeholder="Enter your isbn code"
-            />
-          </InputLabel>
+              <FormControlLabel
+                value="0"
+                control={
+                  <Radio
+                    sx={{
+                      color: Colors.error,
+                      "&.Mui-checked": {
+                        color: Colors.error,
+                      },
+                    }}
+                  />
+                }
+                label="New"
+              />
+              <FormControlLabel
+                value="1"
+                control={
+                  <Radio
+                    sx={{
+                      color: Colors.warning,
+                      "&.Mui-checked": {
+                        color: Colors.warning,
+                      },
+                    }}
+                  />
+                }
+                label="Reading"
+              />
+              <FormControlLabel
+                value="2"
+                control={
+                  <Radio
+                    sx={{
+                      color: Colors.success,
+                      "&.Mui-checked": {
+                        color: Colors.success,
+                      },
+                    }}
+                  />
+                }
+                label="Finished"
+              />
+            </RadioGroup>
+          </FormControl>
         </Box>
         <Stack direction={"row"} gap={"12px"} width={"100%"}>
           <Button
@@ -127,7 +146,9 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
               },
             }}
             fullWidth
-            onClick={() => setOpenModal(false)}
+            onClick={() => {
+              setOpenModal(false);
+            }}
           >
             Close
           </Button>
@@ -149,6 +170,10 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
               },
             }}
             fullWidth
+            onClick={(e) => {
+              e.preventDefault();
+              mutate({ id, status });
+            }}
           >
             Submit
           </Button>
@@ -158,4 +183,4 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
   );
 }
 
-export default BookAddModalIsbn;
+export default BookPatchModal;

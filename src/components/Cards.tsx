@@ -19,14 +19,14 @@ function Cards() {
     return <CircularProgress />;
   }
   return (
-    <Box sx={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+    <Box sx={{ display: "flex", gap: "35px", flexWrap: "wrap" }}>
       {searchBooks.length
         ? searchBooks.map((item, idx) => {
             return <CardItemSearch data={item} key={idx} />;
           })
         : newData &&
           newData.map((item, idx) => {
-            return <CardItem book={item} key={idx} />;
+            return <CardItem data={item} key={idx} />;
           })}
       {/* <CardItem /> */}
     </Box>
