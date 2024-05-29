@@ -9,11 +9,12 @@ interface iProps extends HTMLAttributes<HTMLLabelElement> {
 }
 
 function TitleInput({ input: { ...props }, title }: iProps) {
-  return;
-  <InputLabel>
-    <Typography>{title}</Typography>
-    <Input {...props} type="text" />
-  </InputLabel>;
+  return (
+    <InputLabel>
+      <Typography>{title}</Typography>
+      <Input {...props} type="text" />
+    </InputLabel>
+  );
 }
 
 export default TitleInput;

@@ -10,6 +10,8 @@ import Home from "./pages/home";
 import Login from "./pages/signin";
 import SignUp from "./pages/signup";
 import PageNotFound from "./pages/404-page";
+import Navbar from "./components/Navbar";
+import { Colors } from "./shared/tokens";
 
 function App() {
   const queryClient = new QueryClient();
@@ -18,7 +20,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Box
         sx={{
-          // backgroundColor: "black",
+          backgroundColor: Colors.bgColor,
           backgroundImage: 'url("bg-image.png")', // Ensure the path is correct
           backgroundPosition: `left top`,
           backgroundRepeat: `no-repeat`,
@@ -29,6 +31,7 @@ function App() {
       >
         <Container maxWidth="lg">
           <Router>
+            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signup" element={<SignUp />} />

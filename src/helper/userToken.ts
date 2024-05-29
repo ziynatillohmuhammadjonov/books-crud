@@ -9,7 +9,6 @@ export function getUser(): iUserToken | null {
     try {
       return JSON.parse(token);
     } catch (error) {
-      console.error("Error parsing token from localStorage", error);
       return null;
     }
   }
