@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { iBook } from "../hooks/requests/addNewBook";
+import { iBooksInformation } from "../hooks/requests/addNewBook";
 
 interface iBookStore {
-  book: iBook[];
+  book: iBooksInformation[];
   isLoading: boolean;
   updateLoading: (loading: boolean) => void;
-  updateBook: (data: iBook[]) => void;
+  updateBook: (data: iBooksInformation[]) => void;
 }
 
 const useBookStore = create<iBookStore>((set) => ({
