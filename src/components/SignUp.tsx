@@ -30,7 +30,7 @@ function SignUp() {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/");
+      navigate("/signin");
     }
   }, [isSuccess, navigate]);
 
