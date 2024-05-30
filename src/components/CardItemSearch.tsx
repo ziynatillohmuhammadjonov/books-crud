@@ -1,9 +1,9 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import { Colors, FontSizes } from "../shared/tokens";
-import { iBooksInformation } from "../hooks/requests/addNewBook";
+import { iBook } from "../hooks/requests/addNewBook";
 
 interface iProps {
-  data: iBooksInformation;
+  data: iBook;
 }
 
 function CardItemSearch({ data }: iProps) {
@@ -27,10 +27,10 @@ function CardItemSearch({ data }: iProps) {
           fontWeight={"600"}
           marginBottom={"6px"}
         >
-          {data.author}
+          {data.book.author}
         </Typography>
         <img
-          src={data.cover}
+          src={data.book.cover}
           style={{ width: "200px", marginTop: "20px", marginBottom: "20px" }}
         />
         <Typography
@@ -40,12 +40,12 @@ function CardItemSearch({ data }: iProps) {
           fontFamily="Mulish"
           textAlign={"left"}
         >
-          ISBN code: &nbsp; {data.isbn}
+          ISBN code: &nbsp; {data.book.isbn}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography>
-          {data.author}: {data.published}-year
+          {data.book.author}: {data.book.published}-year
         </Typography>
       </CardActions>
     </Card>

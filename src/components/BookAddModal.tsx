@@ -14,7 +14,7 @@ import { Colors, FontSizes } from "../shared/tokens";
 import LinkIcon from "../assets/icon/LinkIcon";
 import DateIcon from "../assets/icon/DateIcon";
 import { useForm, SubmitHandler } from "react-hook-form";
-import useAddNewBook, { iBooksInformation } from "../hooks/requests/addNewBook";
+import { iBooksInformation } from "../hooks/requests/addNewBook";
 
 const style = {
   position: "absolute",
