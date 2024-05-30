@@ -36,7 +36,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/signin" element={<Login />} />
-              <Route path="/error" element={<PageNotFound />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Router>
           <ToastContainer position="bottom-right" />
