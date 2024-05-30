@@ -74,7 +74,7 @@ function Navbar() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: Colors.white,
+              color: title ? Colors.gray : Colors.white,
               width: "340px",
               borderRadius: "4px",
               borderColor: "transparent",
@@ -103,6 +103,13 @@ function Navbar() {
 
               "& .MuiInputBase-input:focus": {
                 color: Colors.gray,
+              },
+              backgroundColor: title ? Colors.white : "transparent",
+              "& svg path": {
+                stroke: title ? Colors.gray : "",
+              },
+              "& svg g path": {
+                stroke: title ? Colors.gray : "",
               },
             }}
             placeholder="Search for any training you want "

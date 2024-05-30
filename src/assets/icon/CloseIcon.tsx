@@ -10,7 +10,7 @@ function CloseIcon() {
       <g clipPath="url(#clip0_202_182)">
         <path
           d="M12.5 7.5l-5 5m0-5l5 5m5.833-2.5a8.333 8.333 0 11-16.666 0 8.333 8.333 0 0116.666 0z"
-          stroke="#151515"
+          stroke="#FFFFFF"
           strokeWidth={1.6}
           strokeLinecap="round"
           strokeLinejoin="round"
