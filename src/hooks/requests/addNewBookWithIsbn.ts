@@ -21,6 +21,7 @@ const useAddNewBookWithIsbn = () => {
         data,
         userToken ? userToken.secret : ""
       );
+      console.log("from hook: " + data.isbn);
       return axios.post(api, data, {
         headers: {
           Key: userToken?.key,

@@ -38,7 +38,7 @@ function BookAddModal({ openModal, setOpenModal }: iProps) {
   const { mutate } = useAddNewBook();
   const onSubmit: SubmitHandler<iBook> = (formData) => {
     mutate(formData);
-    setOpenModal(false); // Close modal on submit
+    setOpenModal(false);
   };
 
   return (

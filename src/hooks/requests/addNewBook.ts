@@ -12,7 +12,6 @@ interface iBooksInformation {
   pages: number;
   id: number;
   isbn: number;
-  status: number;
 }
 export interface iBook {
   book: iBooksInformation;

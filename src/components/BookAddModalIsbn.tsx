@@ -37,6 +37,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
   const { reset, register, handleSubmit } = useForm<iBookIsbn>();
   const { mutate, isSuccess } = useAddNewBookWithIsbn();
   const onSubmit: SubmitHandler<iBookIsbn> = (formData) => {
+    console.log(formData);
     mutate(formData);
   };
 
@@ -95,7 +96,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
               ISBN
             </Typography>
             <TextField
-              {...register("isbn", { required: true, valueAsNumber: true })}
+              {...register("isbn", { required: true })}
               id="outlined-basic"
               variant="outlined"
               sx={{
@@ -108,7 +109,7 @@ function BookAddModalIsbn({ openModal, setOpenModal }: iProps) {
                 },
               }}
               placeholder="Enter your ISBN code"
-              type="number"
+              type="text"
             />
           </InputLabel>
         </Box>

@@ -19,15 +19,19 @@ const usePatchBook = () => {
       const Sign = mdHash(
         "PATCH",
         Books.patchBook(data.id),
-        data.status,
+        { status: data.status },
         userToken ? userToken.secret : ""
       );
-      return axios.patch(api, data.status, {
-        headers: {
-          Key: userToken?.key,
-          Sign,
-        },
-      });
+      return axios.patch(
+        api,
+        { status: data.status },
+        {
+          headers: {
+            Key: userToken?.key,
+            Sign,
+          },
+        }
+      );
     },
     onSuccess: () => {
       queryClinet.invalidateQueries({ queryKey: ["get-all-books"] });

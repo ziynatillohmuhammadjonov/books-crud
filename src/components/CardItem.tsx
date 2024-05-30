@@ -19,7 +19,6 @@ interface iProps {
 }
 
 function CardItem({ data }: iProps) {
-  console.log(data);
   const [hover, setHover] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const deleteBooks = useDeleteBook();
@@ -125,12 +124,34 @@ function CardItem({ data }: iProps) {
         id={data.book.id}
         setOpenModal={setOpenModal}
       />
-      <Typography>
-        {data.book?.status === 0
+      <Typography
+        sx={{
+          padding: "2px 14px",
+          position: "absolute",
+          fontFamily: "Mulish",
+          fontSize: FontSizes.inputTitleSize,
+          lineHeight: FontSizes.inputTitleSizeHeight,
+          color: Colors.white,
+          top: "8px",
+          right: "8px",
+          borderRadius: "8px",
+          borderWidth: "1px",
+          borderColor: "transparent",
+          backgroundColor:
+            data.status === 0
+              ? Colors.error
+              : data.status === 1
+              ? Colors.warning
+              : data.status === 2
+              ? Colors.success
+              : "",
+        }}
+      >
+        {data.status === 0
           ? "New"
-          : data.book?.status === 1
+          : data.status === 1
           ? "Reading"
-          : data.book?.status === 2
+          : data.status === 2
           ? "Finished"
           : ""}
       </Typography>
