@@ -1,9 +1,9 @@
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import { Colors, FontSizes } from "../shared/tokens";
-import { iBook } from "../hooks/requests/addNewBook";
+import { iBooksInformation } from "../hooks/requests/addNewBook";
 
 interface iProps {
-  data: iBook;
+  data: iBooksInformation;
 }
 
 function CardItemSearch({ data }: iProps) {
