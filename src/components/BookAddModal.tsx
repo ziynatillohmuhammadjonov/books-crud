@@ -14,10 +14,7 @@ import { Colors, FontSizes } from "../shared/tokens";
 import LinkIcon from "../assets/icon/LinkIcon";
 import DateIcon from "../assets/icon/DateIcon";
 import { useForm, SubmitHandler } from "react-hook-form";
-import useAddNewBook, {
-  iBook,
-  iBooksInformation,
-} from "../hooks/requests/addNewBook";
+import useAddNewBook, { iBooksInformation } from "../hooks/requests/addNewBook";
 
 const style = {
   position: "absolute",
@@ -38,9 +35,10 @@ interface iProps {
 
 function BookAddModal({ openModal, setOpenModal }: iProps) {
   const { register, handleSubmit } = useForm<iBooksInformation>();
-  const { mutate } = useAddNewBook();
+  // const { mutate } = useAddNewBook();
   const onSubmit: SubmitHandler<iBooksInformation> = (formData) => {
-    mutate(formData);
+    console.log(formData);
+    // mutate(formData);
     setOpenModal(false);
   };
 
