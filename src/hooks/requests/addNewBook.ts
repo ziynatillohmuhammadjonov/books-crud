@@ -5,13 +5,13 @@ import { getUser } from "../../helper/userToken";
 import axios from "axios";
 import { toast } from "react-toastify";
 interface iBooksInformation {
-  title: string;
-  author: string;
-  cover: string;
-  published: string;
-  pages: number;
-  id: number;
-  isbn: number;
+  title?: string;
+  author?: string;
+  cover?: string;
+  published?: string;
+  pages?: number;
+  id?: number;
+  isbn?: number;
 }
 export interface iBook {
   book: iBooksInformation;
