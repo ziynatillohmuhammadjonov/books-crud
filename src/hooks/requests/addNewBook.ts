@@ -4,7 +4,7 @@ import mdHash from "../../helper/MdHasher";
 import { getUser } from "../../helper/userToken";
 import axios from "axios";
 import { toast } from "react-toastify";
-interface iBooksInformation {
+export interface iBooksInformation {
   title?: string;
   author?: string;
   cover?: string;
